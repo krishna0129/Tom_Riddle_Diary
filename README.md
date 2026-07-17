@@ -16,6 +16,7 @@ Instead of traditional chat boxes or manual file uploads, this project offers a 
 2. Pull a vision-capable model to process the handwriting. Run the following in your terminal:
    ```bash
    ollama run <your_preferred_LLM_name>
+3. Make sure to change the model parameter in the dairy.js file with the LLM name that you're using.
 
 ## P.S.
 
