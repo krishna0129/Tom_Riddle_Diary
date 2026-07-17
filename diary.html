@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Diary</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+  :root{
+    --leather: #241109;
+    --leather-dark: #150a05;
+    --leather-edge: #3a1c0e;
+    --brass: #a9793f;
+    --brass-dim: #6e5330;
+    --parchment: #e6d8b5;
+    --parchment-shadow: #c9b78a;
+    --ink: #201409;
+    --spirit: #6fae6f;
+    --spirit-glow: rgba(111,174,111,0.55);
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+  html,body{
+    margin:0; padding:0; height:100%;
+    background: radial-gradient(ellipse at 50% 20%, #2a1a10 0%, var(--leather-dark) 65%, #0a0503 100%);
+    overflow:hidden;
+    font-family:'Cormorant Garamond', serif;
+  }
+
+  #stage{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    padding: 3vh 2vw;
+  }
+
+  #book{
+    position:relative;
+    width:min(880px, 96vw);
+    height:min(760px, 92vh);
+    background: linear-gradient(155deg, var(--leather-edge), var(--leather) 40%, var(--leather-dark));
+    border-radius: 6px;
+    box-shadow:
+      0 30px 70px rgba(0,0,0,0.65),
+      0 0 0 1px rgba(0,0,0,0.5),
+      inset 0 0 60px rgba(0,0,0,0.55);
+    padding: 22px;
+    display:flex;
+  }
+  
+  #book::before{
+    content:''; position:absolute; inset:10px;
+    border: 1px solid rgba(169,121,63,0.25);
+    border-radius: 3px; pointer-events:none;
+  }
+
+  .clasp{
+    position:absolute; left:50%; top:-14px; transform:translateX(-50%);
+    width:46px; height:28px;
+    background: linear-gradient(180deg, var(--brass), var(--brass-dim));
+    border-radius: 4px 4px 8px 8px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.25);
+    z-index:5;
+  }
+
+  #page{
+    position:relative;
+    flex:1;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.05), transparent 45%),
+      radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.18), transparent 55%),
+      linear-gradient(180deg, var(--parchment) 0%, var(--parchment-shadow) 100%);
+    border-radius: 2px;
+    box-shadow: inset 0 0 40px rgba(90,70,30,0.35), inset 0 0 2px rgba(0,0,0,0.4);
+    overflow:hidden;
+  }
+
+  #page::after{
+    content:''; position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(120,95,50,0.035) 0px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(90deg, rgba(120,95,50,0.03) 0px, transparent 1px, transparent 4px);
+    pointer-events:none; mix-blend-mode: multiply; z-index: 4;
+  }
+
+  /* The entire page is now the drawing canvas */
+  #liveCanvas{
+    position:absolute; inset:0;
+    display:block; width:100%; height:100%;
+    touch-action:none; cursor: crosshair; z-index: 2;
+  }
+
+  /* Invisible layer to hold the fading ink and replies */
+  #overlayContainer {
+    position:absolute; inset:0;
+    pointer-events:none; z-index: 3;
+    overflow:hidden;
+  }
+
+  .ink-snapshot {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    transition: opacity 2s ease-in-out;
+  }
+
+  .reply {
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    
+    /* Changed from center to left so text flows naturally like a book */
+    text-align: left; 
+    
+    font-family: 'Caveat', cursive;
+    font-size: 34px; 
+    line-height: 1.4;
+    color: #1a1412; 
+    text-shadow: 0 0 1px rgba(0,0,0,0.4); 
+    
+    white-space: pre-wrap; 
+    transition: opacity 2.5s ease-in-out;
+  }
+
+  /* Target chunks of text instead of single characters */
+  .reply .chunk {
+    opacity: 0; 
+    display: inline; /* Natural word-wrap prevents mid-word cutoffs */
+    animation: rise 1.8s ease-out forwards; /* Faster 1.2s fade-in */
+  }
+  
+  @keyframes rise {
+    from { 
+      opacity: 0; 
+      filter: blur(5px); 
+    }
+    to { 
+      opacity: 1; 
+      filter: blur(0); 
+    }
+  }
+
+  .fade-out{ opacity:0 !important; }
+
+  @keyframes blink{ 50%{ opacity:0; } }
+
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="book">
+    <div class="clasp"></div>
+    <div id="page">
+      <canvas id="liveCanvas"></canvas>
+      <div id="overlayContainer"></div>
+    </div>
+  </div>
+</div>
+
+<script src="diary.js"></script>
+</body>
+</html>
