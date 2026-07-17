@@ -16,3 +16,7 @@ Instead of traditional chat boxes or manual file uploads, this project offers a 
 2. Pull a vision-capable model to process the handwriting. Run the following in your terminal:
    ```bash
    ollama run <your_preferred_LLM_name>
+
+## P.S.
+
+We are not storing scribbles/prompts anywhere, it'll be sent to the LLM locally and discarded after the transaction ends.
