@@ -1,7 +1,7 @@
 # Tom_Riddle_Diary
 A web-based, AI-powered notebook interface inspired by Tom Riddle's diary. Write natural language questions directly on the parchment, and watch the answers bleed through the page.
 
-Instead of traditional chat boxes or manual file uploads, this project offers a seamless, zero-UI experience. You simply draw or write on the screen—jot down a natural language question —and the interface handles the rest. Your ink slowly fades into the parchment, and a local Vision LLM reads your handwriting to bleed the answer back onto the page in a cursive, organic script.
+Instead of traditional chat boxes or manual file uploads, this project offers a seamless, zero-UI experience. You simply draw or write on the screen—jot down a natural language question—and the interface handles the rest. Your ink slowly fades into the parchment, and a local Vision LLM reads your handwriting to bleed the answer back onto the page in a cursive, organic script.
 
 ## 🛠️ Tech Stack
 
@@ -16,7 +16,7 @@ Instead of traditional chat boxes or manual file uploads, this project offers a 
 2. Pull a vision-capable model to process the handwriting. Run the following in your terminal:
    ```bash
    ollama run <your_preferred_LLM_name>
-3. Make sure to change the model parameter in the dairy.js file with the LLM name that you're using.
+3. Make sure to change the model parameter in the diary.js file with the LLM name that you're using.
 
 ## P.S.
 
